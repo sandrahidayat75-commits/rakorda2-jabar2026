@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 450 120" width="100%" height="100%">
+  <defs>
+    <linearGradient id="goldG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF2A3"/>
+      <stop offset="35%" stop-color="#E5C158"/>
+      <stop offset="70%" stop-color="#C59A27"/>
+      <stop offset="100%" stop-color="#805B0D"/>
+    </linearGradient>
+    <linearGradient id="burgundyG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#9E223D"/>
+      <stop offset="50%" stop-color="#6F1328"/>
+      <stop offset="100%" stop-color="#460814"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-color="#460814" flood-opacity="0.35"/>
+    </filter>
+  </defs>
+
+  <!-- Graphic Badge / Emblem -->
+  <g transform="translate(10, 10)" filter="url(#glow)">
+    <!-- Rosette / Seal Base -->
+    <circle cx="50" cy="50" r="48" fill="url(#burgundyG)" stroke="url(#goldG)" stroke-width="2.5"/>
+    <circle cx="50" cy="50" r="43" fill="none" stroke="url(#goldG)" stroke-width="1" stroke-dasharray="3,2"/>
+    
+    <!-- Roman Numeral II -->
+    <rect x="42" y="26" width="6" height="34" rx="2" fill="url(#goldG)"/>
+    <rect x="52" y="26" width="6" height="34" rx="2" fill="url(#goldG)"/>
+    <!-- Top & bottom bars for Roman II -->
+    <rect x="38" y="22" width="24" height="4.5" rx="1.5" fill="url(#goldG)"/>
+    <rect x="38" y="59" width="24" height="4.5" rx="1.5" fill="url(#goldG)"/>
+
+    <!-- Ribbon Banner with 2026 -->
+    <path d="M12,74 L88,74 L80,90 L20,90 Z" fill="url(#goldG)"/>
+    <text x="50" y="86" font-family="'Plus Jakarta Sans', 'Arial Black', sans-serif" font-weight="900" font-size="12" fill="#460814" text-anchor="middle" letter-spacing="2">
+      2026
+    </text>
+  </g>
+
+  <!-- Typography -->
+  <text x="120" y="38" font-family="'Cinzel', 'Trajan Pro', 'Georgia', serif" font-weight="900" font-size="28" fill="#6F1328" letter-spacing="3">
+    RAKORDA II
+  </text>
+  <rect x="315" y="16" width="110" height="26" rx="4" fill="url(#goldG)"/>
+  <text x="370" y="34" font-family="'Plus Jakarta Sans', 'Arial Black', sans-serif" font-weight="900" font-size="14" fill="#460814" text-anchor="middle" letter-spacing="2">
+    JABAR
+  </text>
+
+  <text x="122" y="64" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-weight="700" font-size="13" fill="#333333" letter-spacing="1.5">
+    RAPAT KOORDINASI DAERAH II
+  </text>
+  
+  <rect x="122" y="74" width="310" height="2" fill="url(#goldG)"/>
+  
+  <text x="122" y="93" font-family="'Plus Jakarta Sans', 'Segoe UI', sans-serif" font-weight="600" font-size="10.5" fill="#666" letter-spacing="0.8">
+    2–4 DESEMBER 2026 • HARRIS HOTEL BANDUNG
+  </text>
+</svg>

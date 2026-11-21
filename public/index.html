@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>RAKORDA II JABAR 2026 - BAN-PDM PROVINSI JAWA BARAT</title>
+  <meta name="description" content="Sistem Presensi 6 Sesi QR Code, Kartu Portrait CR80, dan Sertifikat F4 Digital RAKORDA II BAN-PDM Jawa Barat 2026">
+  <link rel="stylesheet" href="/css/style.css">
+  <script src="/js/qrcode.js"></script>
+</head>
+<body>
+
+  <!-- HEADER WITH BIG BRAND RAKORDA LOGO -->
+  <header class="app-header">
+    <div class="header-top">
+      <div class="brand-wrapper">
+        <div class="brand-logos">
+          <!-- BIG OFFICIAL RAKORDA BRAND LOGO -->
+          <img src="/assets/logo-rakorda-official.png?v=2" alt="Logo RAKORDA II 2026" class="logo-rakorda-big">
+        </div>
+        <div class="brand-text">
+          <h1>RAKORDA II JABAR <span>2026</span></h1>
+          <p>BAN-PDM PROVINSI JAWA BARAT</p>
+          <span class="brand-dates-pill">📅 6, 7, dan 8 Desember 2026</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <div style="font-size:0.8rem; color:rgba(255,255,255,0.9); font-weight:700;" id="header-live-clock">
+          Memuat waktu...
+        </div>
+
+        <button class="role-badge" onclick="openRoleSwitchModal()" title="Ganti Hak Akses Akun">
+          <span class="role-dot"></span>
+          <span id="header-role-text">ADMIN</span>
+        </button>
+
+        <button class="btn-header-action admin-only" onclick="openGoogleSyncModal()" title="Google Sheets & Drive">
+          <span>☁️ Google Sync</span>
+        </button>
+
+        <button class="btn-header-action admin-only" onclick="openSettingsModal()" title="Pengaturan Sistem">
+          <span>⚙️ Pengaturan</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- MAIN 5 MENUS NAVIGATION -->
+    <nav class="main-nav">
+      <div class="nav-container">
+        <button class="nav-item active" data-tab="tab-dashboard">
+          <span class="icon">📊</span>
+          <span>Dashboard</span>
+        </button>
+        <button class="nav-item admin-only" data-tab="tab-peserta">
+          <span class="icon">👥</span>
+          <span>Data Peserta</span>
+        </button>
+        <button class="nav-item" data-tab="tab-scan">
+          <span class="icon">📷</span>
+          <span>Scan QR</span>
+        </button>
+        <button class="nav-item admin-only" data-tab="tab-cards">
+          <span class="icon">🪪</span>
+          <span>Kartu & Sertifikat</span>
+        </button>
+        <button class="nav-item" data-tab="tab-laporan">
+          <span class="icon">📑</span>
+          <span>Laporan</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="app-content">
+
+    <!-- ============================================================== -->
+    <!-- MENU 1: DASHBOARD                                              -->
+    <!-- ============================================================== -->
+    <section id="tab-dashboard" class="tab-pane active">
+      <div class="section-header">
+        <div class="section-title">
+          <h2>📊 Dashboard Statistik Presensi Sesi RAKORDA II 2026</h2>
+          <p>BAN-PDM Provinsi Jawa Barat • 6, 7, dan 8 Desember 2026 • HARRIS Hotel Bandung</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-gold btn-sm" onclick="loadDashboardStats()">🔄 Perbarui Data</button>
+          <button class="btn btn-primary btn-sm" onclick="switchTab('tab-scan')">📷 Buka Scanner Sesi</button>
+          <button class="btn btn-danger btn-sm admin-only" onclick="openResetAttendanceModal()" title="Hapus seluruh presensi atau per sesi">🗑️ Hapus Presensi</button>
+        </div>
+      </div>
+
+      <!-- METRIC CARDS: 6 SESI + TOTAL -->
+      <div class="stats-grid">
+        <div class="stat-card c-burgundy">
+          <div class="stat-header">
+            <span class="stat-label">Total Peserta</span>
+            <span class="stat-icon">👥</span>
+          </div>
+          <div class="stat-value" id="stat-total-peserta">277</div>
+          <div class="stat-desc">11 Anggota BAN • 16 Sekretariat</div>
+        </div>
+
+        <div class="stat-card c-blue">
+          <div class="stat-header">
+            <span class="stat-label">Total Registrasi</span>
+            <span class="stat-icon">📋</span>
+          </div>
+          <div class="stat-value" id="stat-total-reg">277</div>
+          <div class="stat-desc">Terdaftar dalam database</div>
+        </div>
+
+        <div class="stat-card c-gold">
+          <div class="stat-header">
+            <span class="stat-label">H1 - Check-in (14:00)</span>
+            <span class="stat-icon">🏨</span>
+          </div>
+          <div class="stat-value" id="stat-h1-reg">0</div>
+          <div class="stat-desc">6 Des: ID Card & Kamar</div>
+        </div>
+
+        <div class="stat-card c-gold">
+          <div class="stat-header">
+            <span class="stat-label">H1 - Sesi 1 (16:00)</span>
+            <span class="stat-icon">🎤</span>
+          </div>
+          <div class="stat-value" id="stat-h1-s1">0</div>
+          <div class="stat-desc">6 Des: Pembukaan</div>
+        </div>
+
+        <div class="stat-card c-gold">
+          <div class="stat-header">
+            <span class="stat-label">H1 - Sesi 2 (19:30)</span>
+            <span class="stat-icon">🌙</span>
+          </div>
+          <div class="stat-value" id="stat-h1-s2">0</div>
+          <div class="stat-desc">6 Des: Sesi Malam</div>
+        </div>
+
+        <div class="stat-card c-purple">
+          <div class="stat-header">
+            <span class="stat-label">H2 - Sesi 1 (08:00)</span>
+            <span class="stat-icon">☀️</span>
+          </div>
+          <div class="stat-value" id="stat-h2-s1">0</div>
+          <div class="stat-desc">7 Des: Sesi Pagi</div>
+        </div>
+
+        <div class="stat-card c-purple">
+          <div class="stat-header">
+            <span class="stat-label">H2 - Sesi 2 (13:00)</span>
+            <span class="stat-icon">🍽️</span>
+          </div>
+          <div class="stat-value" id="stat-h2-s2">0</div>
+          <div class="stat-desc">7 Des: Sesi Siang</div>
+        </div>
+
+        <div class="stat-card c-purple">
+          <div class="stat-header">
+            <span class="stat-label">H2 - Sesi 3 (16:00)</span>
+            <span class="stat-icon">☕</span>
+          </div>
+          <div class="stat-value" id="stat-h2-s3">0</div>
+          <div class="stat-desc">7 Des: Sesi Sore</div>
+        </div>
+
+        <div class="stat-card c-purple">
+          <div class="stat-header">
+            <span class="stat-label">H2 - Sesi 4 (19:30)</span>
+            <span class="stat-icon">🏆</span>
+          </div>
+          <div class="stat-value" id="stat-h2-s4">0</div>
+          <div class="stat-desc">7 Des: Sesi Malam</div>
+        </div>
+
+        <div class="stat-card c-green">
+          <div class="stat-header">
+            <span class="stat-label">Lengkap 6 Sesi</span>
+            <span class="stat-icon">🌟</span>
+          </div>
+          <div class="stat-value" id="stat-hadir-lengkap">0</div>
+          <div class="stat-desc">Hadir seluruh sesi</div>
+        </div>
+
+        <div class="stat-card c-red">
+          <div class="stat-header">
+            <span class="stat-label">Tidak Hadir</span>
+            <span class="stat-icon">❌</span>
+          </div>
+          <div class="stat-value" id="stat-tidak-hadir">0</div>
+          <div class="stat-desc">Belum pernah presensi</div>
+        </div>
+      </div>
+
+      <!-- CHARTS & RECENT ACTIVITY -->
+      <div class="dashboard-grid">
+        <div class="card">
+          <div class="card-title">
+            <span>📈 Grafik Kehadiran Per Sesi (6–7 Desember 2026)</span>
+            <span style="font-size:0.8rem; color:#64748b; font-weight:normal;">Target: 277 Peserta</span>
+          </div>
+          <div class="chart-box" id="chart-container">
+            <p style="color:#94a3b8;">Memuat grafik sesi...</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">
+            <span>⚡ Aktivitas Presensi Sesi Terkini</span>
+          </div>
+          <div id="recent-scans-list" style="max-height: 380px; overflow-y: auto;">
+            <p style="color:#94a3b8; font-size:0.85rem;">Memuat aktivitas...</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- MENU 2: DATA PESERTA                                           -->
+    <!-- ============================================================== -->
+    <section id="tab-peserta" class="tab-pane">
+      <div class="section-header">
+        <div class="section-title">
+          <h2>👥 Data Peserta RAKORDA II (277 Orang)</h2>
+          <p id="participants-total-badge">Memuat data peserta...</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-gold btn-sm" onclick="openAddParticipantModal()">➕ Tambah Peserta</button>
+          <button class="btn btn-primary btn-sm" onclick="openImportExcelModal()">📥 Import Excel / CSV</button>
+          <button class="btn btn-secondary btn-sm" onclick="exportParticipantsExcel()">📤 Export Excel</button>
+          <a href="/api/template/excel" class="btn btn-secondary btn-sm" download>📑 Unduh Template Excel</a>
+          <button class="btn btn-secondary btn-sm" onclick="openGoogleSyncModal()">🔄 Sync Google Sheets</button>
+          <button class="btn btn-danger btn-sm" onclick="openResetParticipantsModal()" title="Hapus peserta kelipatan 50">⚠️ Reset Peserta (Kelipatan 50)</button>
+        </div>
+      </div>
+
+      <!-- SEARCH & FILTER -->
+      <div class="filter-bar">
+        <div class="search-input-group">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="search-participant" placeholder="Cari nama, nomor peserta, instansi, jabatan, no HP...">
+        </div>
+        <div>
+          <select id="filter-category" class="filter-select">
+            <option value="">Semua Kategori</option>
+            <option value="Anggota BAN-PDM">Anggota BAN-PDM (11)</option>
+            <option value="Sekretariat">Sekretariat (16)</option>
+            <option value="Peserta Rakorda">Peserta Rakorda</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- TABLE PARTICIPANTS -->
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width:40px; text-align:center;">NO</th>
+              <th>NOMOR</th>
+              <th>NAMA LENGKAP</th>
+              <th>INSTANSI</th>
+              <th>JABATAN</th>
+              <th>KATEGORI</th>
+              <th style="text-align:center;">KEHADIRAN SESI</th>
+              <th style="text-align:center; width:150px;">AKSI</th>
+            </tr>
+          </thead>
+          <tbody id="participants-table-body">
+            <tr><td colspan="8" style="text-align:center; padding:20px;">Memuat data...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- MENU 3: SCAN QR (SESSION-BASED)                                -->
+    <!-- ============================================================== -->
+    <section id="tab-scan" class="tab-pane">
+      <div class="section-header">
+        <div class="section-title">
+          <h2>📷 Pemindai QR Code Sesi Presensi Kamera HP</h2>
+          <p>Pilih sesi yang sedang berlangsung, lalu arahkan kamera ke QR Code kartu peserta.</p>
+        </div>
+        <div class="section-actions">
+          <span style="font-size:0.85rem; font-weight:800; color:var(--primary-burgundy);" id="active-session-label">
+            Aktif: Hari 1 - Sesi 1: Pembukaan (16:00)
+          </span>
+        </div>
+      </div>
+
+      <div class="scanner-layout">
+        <!-- LEFT: CAMERA VIEWPORT & CONTROLS -->
+        <div class="scanner-viewport-card">
+          <!-- 6 SESSIONS SELECTOR -->
+          <div class="session-selector-bar">
+            <div class="session-label-title">Pilih Sesi Presensi Aktif:</div>
+            
+            <div style="font-size:0.75rem; color:#fce881; font-weight:700; margin-bottom:4px;">
+              HARI PERTAMA (6 DESEMBER 2026):
+            </div>
+            <div class="session-pills-grid" style="margin-bottom:8px;">
+              <button class="session-pill active" onclick="setScanSession('H1_REG', this)">
+                <span>🏨 Check-in, ID Card & Kamar</span>
+                <span class="sp-time">14:00 - 16:00 WIB</span>
+              </button>
+              <button class="session-pill" onclick="setScanSession('H1_S1', this)">
+                <span>🎤 Sesi 1: Pembukaan</span>
+                <span class="sp-time">Pukul 16:00 WIB</span>
+              </button>
+              <button class="session-pill" onclick="setScanSession('H1_S2', this)">
+                <span>🌙 Sesi 2: Materi Malam</span>
+                <span class="sp-time">Pukul 19:30 WIB</span>
+              </button>
+            </div>
+
+            <div style="font-size:0.75rem; color:#fce881; font-weight:700; margin-bottom:4px;">
+              HARI KEDUA (7 DESEMBER 2026):
+            </div>
+            <div class="session-pills-grid">
+              <button class="session-pill" onclick="setScanSession('H2_S1', this)">
+                <span>☀️ Sesi 1: Pagi</span>
+                <span class="sp-time">Pukul 08:00 WIB</span>
+              </button>
+              <button class="session-pill" onclick="setScanSession('H2_S2', this)">
+                <span>🍽️ Sesi 2: Siang</span>
+                <span class="sp-time">Pukul 13:00 WIB</span>
+              </button>
+              <button class="session-pill" onclick="setScanSession('H2_S3', this)">
+                <span>☕ Sesi 3: Sore</span>
+                <span class="sp-time">Pukul 16:00 WIB</span>
+              </button>
+              <button class="session-pill" onclick="setScanSession('H2_S4', this)">
+                <span>🏆 Sesi 4: Malam</span>
+                <span class="sp-time">Pukul 19:30 WIB</span>
+              </button>
+            </div>
+
+            <div class="day3-notice-badge">
+              ℹ️ HARI KETIGA (8 Desember 2026): Penutupan & Kepulangan (Tidak di-scan)
+            </div>
+          </div>
+
+          <!-- CAMERA CONTROLS -->
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="btn btn-gold btn-sm" id="btn-start-camera" onclick="startScanner()">▶️ Buka Kamera Live</button>
+              <button class="btn btn-danger btn-sm" id="btn-stop-camera" onclick="stopScanner()" style="display:none;">⏹️ Tutup Kamera</button>
+              <button class="btn btn-secondary btn-sm" onclick="switchCamera()" title="Ganti Kamera Depan/Belakang">🔄 Ganti Kamera</button>
+            </div>
+          </div>
+
+          <!-- VIDEO STREAM -->
+          <div class="video-container">
+            <video id="camera-video" playsinline></video>
+            <div class="scan-overlay">
+              <div class="scan-box-guide"></div>
+            </div>
+            <div id="camera-placeholder" style="position:absolute; text-align:center; color:#9ca3af; padding:20px;">
+              <div style="font-size:3rem; margin-bottom:8px;">📷</div>
+              <p style="font-weight:800; font-size:1.05rem; color:#ffffff;">Kamera Scanner Otomatis</p>
+              <p style="font-size:0.8rem; margin-top:4px; max-width:280px; margin-left:auto; margin-right:auto;">Arahkan kamera ke QR Code kartu peserta untuk presensi otomatis:</p>
+              <button type="button" class="btn btn-gold" onclick="startScanner()" style="margin-top:12px; font-weight:800; font-size:0.95rem; padding:10px 20px; box-shadow: 0 4px 14px rgba(212,175,55,0.4);">
+                ▶️ Aktifkan Kamera Live Sekarang
+              </button>
+            </div>
+          </div>
+
+          <!-- NOTIFICATION BANNER -->
+          <div id="scan-alert-box" class="scan-alert-banner"></div>
+
+          <!-- SIMULATOR CONTROLS -->
+          <div style="margin-top:14px; padding-top:12px; border-top:1px solid #374151; display:flex; justify-content:space-between; align-items:center;">
+            <span style="font-size:0.75rem; color:#9ca3af;">Simulasi Uji Scan:</span>
+            <div style="display:flex; gap:6px;">
+              <button class="btn btn-secondary btn-sm" onclick="simulateTestScan('random')">🎲 Test Scan Peserta</button>
+              <button class="btn btn-secondary btn-sm" onclick="simulateTestScan('invalid')">⚠️ Test QR Salah</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- RIGHT: SCANNED PARTICIPANT DETAILS -->
+        <div class="participant-preview-card">
+          <div id="no-scan-placeholder" style="text-align:center; padding:40px 20px; color:#94a3b8;">
+            <div style="font-size:3.5rem; margin-bottom:12px;">🪪</div>
+            <h3 style="color:#64748b; font-size:1.1rem; font-weight:700;">Menunggu Pemindaian QR</h3>
+            <p style="font-size:0.85rem; margin-top:6px; max-width:320px; margin-left:auto; margin-right:auto;">
+              Arahkan kartu peserta ke kamera. Nama, foto avatar, instansi, jabatan, dan status kehadiran sesi akan langsung tampil di sini.
+            </p>
+          </div>
+
+          <div id="scanned-participant-details" style="display:none;">
+            <div class="participant-header-box" style="display:flex; gap:14px; align-items:center; margin-bottom:16px;">
+              <div class="avatar-badge" id="sp-avatar">RK</div>
+              <div class="participant-info">
+                <h3 id="sp-name" style="font-size:1.15rem; font-weight:800; color:var(--primary-burgundy);">Nama Peserta</h3>
+                <span class="cat-pill cat-peserta" id="sp-kategori">Peserta Rakorda</span>
+                <div style="font-size:0.78rem; color:#64748b; margin-top:2px;">
+                  Nomor: <code id="sp-nomor">RKD-000</code>
+                </div>
+              </div>
+            </div>
+
+            <table class="detail-table">
+              <tr>
+                <td>Instansi</td>
+                <td id="sp-instansi">-</td>
+              </tr>
+              <tr>
+                <td>Jabatan</td>
+                <td id="sp-jabatan">-</td>
+              </tr>
+              <tr>
+                <td>No. HP / WA</td>
+                <td id="sp-hp">-</td>
+              </tr>
+              <tr>
+                <td>Email</td>
+                <td id="sp-email">-</td>
+              </tr>
+              <tr>
+                <td>Sesi & Jam</td>
+                <td id="sp-time" style="color:var(--primary-burgundy); font-weight:800;">-</td>
+              </tr>
+            </table>
+
+            <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:12px; display:flex; align-items:center; justify-content:space-between;">
+              <div>
+                <div style="font-size:0.75rem; color:#64748b; font-weight:600;">STATUS PRESENSI:</div>
+                <div style="font-size:0.92rem; font-weight:900; color:#10b981;">TERVALIDASI BAN-PDM</div>
+              </div>
+              <canvas id="sp-qr-canvas" width="60" height="60" style="width:60px; height:60px; background:white; border-radius:4px; padding:2px; border:1px solid #d4af37;"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- MENU 4: KARTU PESERTA (PORTRAIT) & SERTIFIKAT (F4)             -->
+    <!-- ============================================================== -->
+    <section id="tab-cards" class="tab-pane">
+      <div class="section-header">
+        <div class="section-title">
+          <h2>🪪 Cetak Kartu Peserta Portrait (5,4 × 8,56 cm) & Sertifikat (F4)</h2>
+          <p>Format ukuran sebenarnya (Portrait CR80) dengan Logo Resmi RAKORDA II 2026 berukuran besar.</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-gold btn-sm" onclick="document.getElementById('card-section-wrapper').scrollIntoView({behavior:'smooth'})">🪪 Kartu Portrait (CR80)</button>
+          <button class="btn btn-primary btn-sm" onclick="document.getElementById('cert-section-wrapper').scrollIntoView({behavior:'smooth'})">📜 Sertifikat Resmi (F4)</button>
+        </div>
+      </div>
+
+      <!-- PART 1: KARTU PESERTA PORTRAIT (5,4 cm x 8,56 cm) -->
+      <div class="card" id="card-section-wrapper">
+        <div class="card-title">
+          <span>1. KARTU TANDA PESERTA PORTRAIT (5,4 cm x 8,56 cm) • 9 KARTU PER LEMBAR A4</span>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-gold btn-sm" onclick="printCurrentCard()">🖨️ Cetak Kartu Ini</button>
+            <button class="btn btn-primary btn-sm" onclick="printBatchCards('ALL')">📑 Cetak 9 Kartu per Lembar A4 (Seluruh Peserta)</button>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; align-items:center; margin-bottom:16px; flex-wrap:wrap;">
+          <label style="font-weight:700; font-size:0.85rem;">Pilih Peserta:</label>
+          <select id="card-participant-select" class="form-select" style="max-width:380px;" onchange="onCardParticipantChange(this)">
+            <option>Memuat daftar peserta...</option>
+          </select>
+          <button class="btn btn-secondary btn-sm" onclick="printBatchCards('Peserta Rakorda')">Cetak Kategori Peserta</button>
+          <button class="btn btn-secondary btn-sm" onclick="printBatchCards('Anggota BAN-PDM')">Cetak Anggota BAN (11)</button>
+          <button class="btn btn-secondary btn-sm" onclick="printBatchCards('Sekretariat')">Cetak Sekretariat (16)</button>
+        </div>
+
+        <!-- LIVE PORTRAIT CARD PREVIEW -->
+        <div class="cr80-card-wrapper" id="single-card-preview">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+
+      <!-- PART 2: SERTIFIKAT (F4 LANDSCAPE: 21,5 cm x 33 cm) -->
+      <div class="card" id="cert-section-wrapper" style="margin-top:24px;">
+        <div class="card-title">
+          <span>2. SERTIFIKAT RESMI (Ukuran F4 Landscape: 21,5 cm x 33 cm) • Tanggal 6–8 Desember 2026</span>
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-gold btn-sm" onclick="printCurrentCertificate()">🖨️ Cetak Sertifikat Ini</button>
+            <button class="btn btn-primary btn-sm" onclick="printBatchCertificates()">📑 Cetak Seluruh Sertifikat (Yang Memenuhi Syarat)</button>
+          </div>
+        </div>
+
+        <div style="display:flex; gap:12px; align-items:center; margin-bottom:16px; flex-wrap:wrap;">
+          <label style="font-weight:700; font-size:0.85rem;">Pilih Peserta:</label>
+          <select id="cert-participant-select" class="form-select" style="max-width:380px;" onchange="onCertParticipantChange(this)">
+            <option>Memuat daftar peserta...</option>
+          </select>
+          <span style="font-size:0.8rem; color:#64748b;">Syarat Sertifikat: Minimal 4 Sesi Kehadiran</span>
+        </div>
+
+        <!-- ELIGIBILITY WARNING -->
+        <div id="cert-eligibility-warning" class="scan-alert-banner warning" style="margin-bottom:16px;"></div>
+
+        <!-- LIVE F4 CERTIFICATE PREVIEW -->
+        <div class="certificate-preview-wrapper" id="single-cert-preview">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================== -->
+    <!-- MENU 5: LAPORAN KEHADIRAN (6 SESI)                             -->
+    <!-- ============================================================== -->
+    <section id="tab-laporan" class="tab-pane">
+      <div class="section-header">
+        <div class="section-title">
+          <h2>📑 Rekapitulasi Presensi 6 Sesi RAKORDA II 2026</h2>
+          <p>Tabel rekapitulasi kehadiran Hari 1 (16:00, 19:30) dan Hari 2 (08:00, 13:00, 16:00, 19:30).</p>
+        </div>
+        <div class="section-actions">
+          <button class="btn btn-gold btn-sm" onclick="exportReportExcel()">📥 Download Rekap Excel (.xls)</button>
+          <a href="/api/attendance/export_log_excel" class="btn btn-secondary btn-sm" download title="Unduh log pemindaian lengkap format Excel">📑 Log Presensi (.xls)</a>
+          <button class="btn btn-secondary btn-sm" onclick="printReport()">🖨️ Cetak / PDF</button>
+          <button class="btn btn-danger btn-sm admin-only" onclick="openResetAttendanceModal()" title="Hapus rekaman presensi">🗑️ Hapus Presensi</button>
+        </div>
+      </div>
+
+      <!-- COUNTERS -->
+      <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); margin-bottom:16px;">
+        <div class="stat-card c-burgundy" style="padding:12px 14px;">
+          <div class="stat-label">Total Peserta</div>
+          <div class="stat-value" id="rep-sum-total" style="font-size:1.4rem;">0</div>
+        </div>
+        <div class="stat-card c-green" style="padding:12px 14px;">
+          <div class="stat-label">Lengkap (6 Sesi)</div>
+          <div class="stat-value" id="rep-sum-lengkap" style="font-size:1.4rem;">0</div>
+        </div>
+        <div class="stat-card c-gold" style="padding:12px 14px;">
+          <div class="stat-label">Sebagian (1-5 Sesi)</div>
+          <div class="stat-value" id="rep-sum-sebagian" style="font-size:1.4rem;">0</div>
+        </div>
+        <div class="stat-card c-red" style="padding:12px 14px;">
+          <div class="stat-label">Tidak Hadir</div>
+          <div class="stat-value" id="rep-sum-absen" style="font-size:1.4rem;">0</div>
+        </div>
+      </div>
+
+      <!-- FILTER BAR -->
+      <div class="filter-bar">
+        <div class="search-input-group">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="report-search" placeholder="Cari nama peserta, instansi, atau nomor...">
+        </div>
+        <div style="display:flex; gap:8px;">
+          <select id="report-cat-filter" class="filter-select">
+            <option value="">Semua Kategori</option>
+            <option value="Peserta Rakorda">Peserta Rakorda</option>
+            <option value="Anggota BAN-PDM">Anggota BAN-PDM</option>
+            <option value="Sekretariat">Sekretariat</option>
+          </select>
+          <select id="report-session-filter" class="filter-select">
+            <option value="">Semua Sesi</option>
+            <option value="h1_reg">H1 Check-in: 14:00 (ID Card & Kamar)</option>
+            <option value="h1_s1">H1 Sesi 1: 16:00 (Pembukaan)</option>
+            <option value="h1_s2">H1 Sesi 2: 19:30 (Malam)</option>
+            <option value="h2_s1">H2 Sesi 1: 08:00 (Pagi)</option>
+            <option value="h2_s2">H2 Sesi 2: 13:00 (Siang)</option>
+            <option value="h2_s3">H2 Sesi 3: 16:00 (Sore)</option>
+            <option value="h2_s4">H2 Sesi 4: 19:30 (Malam)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- TABLE REPORT 7 SESSIONS -->
+      <div class="table-responsive">
+        <table class="data-table">
+          <thead>
+            <tr>
+              <th style="width:30px; text-align:center;">NO</th>
+              <th>NOMOR</th>
+              <th>NAMA LENGKAP</th>
+              <th>INSTANSI</th>
+              <th>KATEGORI</th>
+              <th style="text-align:center;">Check-in (14:00)</th>
+              <th style="text-align:center;">H1-1 (16:00)</th>
+              <th style="text-align:center;">H1-2 (19:30)</th>
+              <th style="text-align:center;">H2-1 (08:00)</th>
+              <th style="text-align:center;">H2-2 (13:00)</th>
+              <th style="text-align:center;">H2-3 (16:00)</th>
+              <th style="text-align:center;">H2-4 (19:30)</th>
+              <th style="text-align:center;">TOTAL SESI</th>
+              <th style="text-align:center;">STATUS</th>
+            </tr>
+          </thead>
+          <tbody id="report-table-body">
+            <tr><td colspan="14" style="text-align:center; padding:20px;">Memuat laporan sesi...</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============================================================== -->
+  <!-- MODALS                                                         -->
+  <!-- ============================================================== -->
+
+  <!-- MODAL: RESET PESERTA KELIPATAN 50 -->
+  <div class="modal-backdrop" id="modal-reset-participants">
+    <div class="modal-card" style="max-width:480px; border-top-color:#dc2626;">
+      <div class="modal-header">
+        <h3 style="color:#dc2626;">⚠️ Reset Peserta (Kelipatan 50)</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-reset-participants')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background:#fef2f2; border-left:4px solid #ef4444; padding:12px; border-radius:4px; font-size:0.85rem; color:#991b1b; margin-bottom:14px;">
+          <strong>Peringatan Penghapusan:</strong> Fitur ini akan menghapus peserta secara bertahap dalam kelipatan 50 orang dari urutan terbawah beserta seluruh log presensinya.
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:10px 14px; border-radius:6px; border:1px solid #e2e8f0; margin-bottom:14px;">
+          <span style="font-size:0.85rem; font-weight:700; color:#475569;">Total Peserta Saat Ini:</span>
+          <span style="font-size:1.1rem; font-weight:900; color:var(--primary-burgundy);" id="reset-modal-current-total">277 Orang</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Pilih Jumlah Peserta Yang Ingin Dihapus:</label>
+          <select id="reset-count-select" class="form-select" style="font-weight:700;">
+            <option value="50">Hapus 50 Peserta</option>
+            <option value="100">Hapus 100 Peserta</option>
+            <option value="150">Hapus 150 Peserta</option>
+            <option value="200">Hapus 200 Peserta</option>
+            <option value="250">Hapus 250 Peserta</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-top:14px;">
+          <label class="form-label">Ketik kata <code style="color:#dc2626; font-weight:bold;">RESET</code> untuk konfirmasi:</label>
+          <input type="text" id="reset-confirm-input" class="form-input" placeholder="Ketik RESET di sini" style="text-transform:uppercase;">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-reset-participants')">Batal</button>
+        <button type="button" class="btn btn-danger" id="btn-confirm-reset" onclick="submitResetParticipants()">
+          🗑️ Ya, Hapus Sekarang
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: HAPUS / RESET DATA PRESENSI -->
+  <div class="modal-backdrop" id="modal-reset-attendance">
+    <div class="modal-card" style="max-width:500px; border-top-color:#dc2626;">
+      <div class="modal-header">
+        <h3 style="color:#dc2626;">🗑️ Hapus Data Presensi</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-reset-attendance')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background:#fef2f2; border-left:4px solid #ef4444; padding:12px; border-radius:4px; font-size:0.85rem; color:#991b1b; margin-bottom:14px;">
+          <strong>Peringatan:</strong> Data presensi kehadiran yang dihapus tidak dapat dipulihkan kembali. Anda dapat memilih untuk menghapus presensi pada sesi tertentu saja atau menghapus seluruh sesi sekaligus.
+        </div>
+
+        <div style="display:flex; justify-content:space-between; align-items:center; background:#f8fafc; padding:10px 14px; border-radius:6px; border:1px solid #e2e8f0; margin-bottom:14px;">
+          <span style="font-size:0.85rem; font-weight:700; color:#475569;">Total Presensi Tercatat:</span>
+          <span style="font-size:1.1rem; font-weight:900; color:var(--primary-burgundy);" id="reset-att-current-count">Memuat...</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Pilih Target Presensi Yang Ingin Dihapus:</label>
+          <select id="reset-attendance-scope" class="form-select" style="font-weight:700;">
+            <option value="ALL">🔴 Hapus SELURUH Sesi (Reset Semua Presensi)</option>
+            <option value="H1_S1">Hari 1 - Sesi 1: Pembukaan (16:00)</option>
+            <option value="H1_S2">Hari 1 - Sesi 2: Materi Malam (19:30)</option>
+            <option value="H2_S1">Hari 2 - Sesi 1: Pagi (08:00)</option>
+            <option value="H2_S2">Hari 2 - Sesi 2: Siang (13:00)</option>
+            <option value="H2_S3">Hari 2 - Sesi 3: Sore (16:00)</option>
+            <option value="H2_S4">Hari 2 - Sesi 4: Malam (19:30)</option>
+          </select>
+        </div>
+
+        <div class="form-group" style="margin-top:14px;">
+          <label class="form-label">Ketik kata <code style="color:#dc2626; font-weight:bold;">HAPUS</code> untuk konfirmasi:</label>
+          <input type="text" id="reset-attendance-confirm-input" class="form-input" placeholder="Ketik HAPUS di sini" style="text-transform:uppercase;">
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-reset-attendance')">Batal</button>
+        <button type="button" class="btn btn-danger" id="btn-confirm-reset-attendance" onclick="submitResetAttendance()">
+          🗑️ Ya, Hapus Data Presensi
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: IMPORT EXCEL / CSV -->
+  <div class="modal-backdrop" id="modal-import-excel">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>📥 Import Data Peserta dari Excel / CSV</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-import-excel')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background:#eff6ff; border-left:4px solid #3b82f6; padding:12px; border-radius:4px; font-size:0.85rem; color:#1e40af; margin-bottom:14px;">
+          Pilih file <strong>.xlsx</strong> atau <strong>.csv</strong>. Sistem akan membaca kolom Nama Lengkap, Instansi, Jabatan, Kategori, No HP, dan Email, serta otomatis membuat QR Code unik!
+        </div>
+
+        <div class="file-dropzone" onclick="document.getElementById('import-file-input').click()">
+          <div style="font-size:2.5rem; margin-bottom:8px;">📁</div>
+          <div style="font-weight:700; color:var(--primary-burgundy);">Klik atau Tarik File Excel/CSV ke Sini</div>
+          <div style="font-size:0.75rem; color:#64748b; margin-top:4px;">Format: CSV / XLSX</div>
+          <input type="file" id="import-file-input" accept=".csv,.xlsx,.xls" style="display:none;" onchange="handleFileSelect(event)">
+        </div>
+
+        <div id="import-preview-box" style="display:none; margin-top:14px; background:#ecfdf5; border:1px solid #10b981; padding:10px; border-radius:6px; font-size:0.85rem; color:#065f46; font-weight:700;">
+          <span id="import-preview-count">0 calon peserta terbaca.</span>
+        </div>
+
+        <div style="margin-top:16px;">
+          <a href="/api/template/excel" class="btn btn-secondary btn-sm" download>📑 Unduh Contoh Template Excel</a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-import-excel')">Batal</button>
+        <button type="button" class="btn btn-primary" id="btn-do-import" onclick="submitImportExcel()">Proses Import Sekarang</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: TAMBAH PESERTA -->
+  <div class="modal-backdrop" id="modal-add-participant">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>➕ Tambah Peserta Rakorda</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-add-participant')">&times;</button>
+      </div>
+      <form id="form-add-participant" onsubmit="saveNewParticipant(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Nama Lengkap (Beserta Gelar) *</label>
+            <input type="text" name="nama_lengkap" class="form-input" required placeholder="Contoh: Dr. H. Ahmad Fauzi, M.Pd.">
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Instansi *</label>
+              <input type="text" name="instansi" class="form-input" required placeholder="Contoh: Dinas Pendidikan Kab. Bandung">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Jabatan *</label>
+              <input type="text" name="jabatan" class="form-input" required placeholder="Contoh: Pengawas Sekolah Ahli Madya">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Kategori Peserta *</label>
+            <select name="kategori" class="form-select">
+              <option value="Peserta Rakorda">Peserta Rakorda</option>
+              <option value="Anggota BAN-PDM">Anggota BAN-PDM</option>
+              <option value="Sekretariat">Sekretariat</option>
+            </select>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nomor WhatsApp / HP</label>
+              <input type="text" name="no_hp" class="form-input" placeholder="0812xxxxxxxx">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" name="email" class="form-input" placeholder="nama@email.com">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Foto Peserta (Untuk Kartu CR80 & Sertifikat)</label>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+              <input type="file" accept="image/*" class="form-input" onchange="previewAndSetPhoto(event, 'form-add-participant')" style="padding:6px; flex:1; min-width:200px;">
+              <input type="text" name="foto_url" class="form-input" placeholder="Atau link Google Drive / URL gambar" style="flex:1; min-width:200px;">
+            </div>
+            <div id="add-photo-preview" style="margin-top:8px; display:none;">
+              <img src="" style="width:50px; height:64px; object-fit:cover; border-radius:4px; border:1.5px solid var(--accent-gold); box-shadow:0 2px 6px rgba(0,0,0,0.15);">
+            </div>
+            <small style="color:#64748b; font-size:0.75rem;">Disarankan pas foto formal rasio 3x4. Unggah langsung dari HP/Laptop atau tempel tautan Google Drive.</small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-add-participant')">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Peserta</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: EDIT PESERTA -->
+  <div class="modal-backdrop" id="modal-edit-participant">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>✏️ Edit Data Peserta</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-edit-participant')">&times;</button>
+      </div>
+      <form id="form-edit-participant" onsubmit="saveEditParticipant(event)">
+        <input type="hidden" name="participant_id">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nomor Peserta</label>
+              <input type="text" name="nomor_peserta" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Kategori</label>
+              <select name="kategori" class="form-select">
+                <option value="Peserta Rakorda">Peserta Rakorda</option>
+                <option value="Anggota BAN-PDM">Anggota BAN-PDM</option>
+                <option value="Sekretariat">Sekretariat</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Nama Lengkap</label>
+            <input type="text" name="nama_lengkap" class="form-input" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Instansi</label>
+              <input type="text" name="instansi" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Jabatan</label>
+              <input type="text" name="jabatan" class="form-input" required>
+            </div>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Nomor HP</label>
+              <input type="text" name="no_hp" class="form-input">
+            </div>
+            <div class="form-group">
+              <label class="form-label">Email</label>
+              <input type="email" name="email" class="form-input">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Foto Peserta (Untuk Kartu CR80 & Sertifikat)</label>
+            <div style="display:flex; gap:10px; align-items:center; flex-wrap:wrap;">
+              <input type="file" accept="image/*" class="form-input" onchange="previewAndSetPhoto(event, 'form-edit-participant')" style="padding:6px; flex:1; min-width:200px;">
+              <input type="text" name="foto_url" class="form-input" placeholder="Atau link Google Drive / URL gambar" style="flex:1; min-width:200px;">
+            </div>
+            <div id="edit-photo-preview" style="margin-top:8px; display:none;">
+              <img src="" style="width:50px; height:64px; object-fit:cover; border-radius:4px; border:1.5px solid var(--accent-gold); box-shadow:0 2px 6px rgba(0,0,0,0.15);">
+            </div>
+            <small style="color:#64748b; font-size:0.75rem;">Disarankan pas foto formal rasio 3x4. Unggah langsung dari HP/Laptop atau tempel tautan Google Drive.</small>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-edit-participant')">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Perubahan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: MANUAL PRESENSI 6 SESI -->
+  <div class="modal-backdrop" id="modal-manual-presensi">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3>📅 Presensi Manual 6 Sesi</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-manual-presensi')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="margin-bottom:14px;">
+          <div style="font-weight:900; font-size:1.1rem; color:var(--primary-burgundy);" id="manual-name">Nama Peserta</div>
+          <div style="font-size:0.85rem; color:#64748b;" id="manual-instansi">Instansi</div>
+        </div>
+
+        <p style="font-size:0.8rem; color:#475569; margin-bottom:10px;">
+          Klik tombol sesi untuk mengubah status kehadiran (Hadir / Belum Hadir):
+        </p>
+
+        <div style="font-size:0.75rem; font-weight:800; color:var(--primary-burgundy); margin:8px 0 4px;">HARI 1 (6 DESEMBER 2026):</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <button id="btn-toggle-h1reg" class="btn btn-secondary" onclick="toggleSessionAttendance('H1_REG')">
+            Hari 1 - Check-in, ID Card & Kamar (14:00 - 16:00)
+          </button>
+          <button id="btn-toggle-h1s1" class="btn btn-secondary" onclick="toggleSessionAttendance('H1_S1')">
+            Hari 1 - Sesi 1: Pembukaan (16:00)
+          </button>
+          <button id="btn-toggle-h1s2" class="btn btn-secondary" onclick="toggleSessionAttendance('H1_S2')">
+            Hari 1 - Sesi 2: Materi Malam (19:30)
+          </button>
+        </div>
+
+        <div style="font-size:0.75rem; font-weight:800; color:var(--primary-burgundy); margin:14px 0 4px;">HARI 2 (7 DESEMBER 2026):</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <button id="btn-toggle-h2s1" class="btn btn-secondary" onclick="toggleSessionAttendance('H2_S1')">
+            Hari 2 - Sesi 1: Pagi (08:00)
+          </button>
+          <button id="btn-toggle-h2s2" class="btn btn-secondary" onclick="toggleSessionAttendance('H2_S2')">
+            Hari 2 - Sesi 2: Siang (13:00)
+          </button>
+          <button id="btn-toggle-h2s3" class="btn btn-secondary" onclick="toggleSessionAttendance('H2_S3')">
+            Hari 2 - Sesi 3: Sore (16:00)
+          </button>
+          <button id="btn-toggle-h2s4" class="btn btn-secondary" onclick="toggleSessionAttendance('H2_S4')">
+            Hari 2 - Sesi 4: Malam (19:30)
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" onclick="closeModal('modal-manual-presensi')">Selesai</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: VIEW QR -->
+  <div class="modal-backdrop" id="modal-view-qr">
+    <div class="modal-card" style="max-width:380px; text-align:center;">
+      <div class="modal-header">
+        <h3 id="modal-qr-title">QR Code Peserta</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-view-qr')">&times;</button>
+      </div>
+      <div class="modal-body" style="display:flex; flex-direction:column; align-items:center;">
+        <p id="modal-qr-subtitle" style="font-size:0.85rem; color:#64748b; margin-bottom:12px;">Instansi</p>
+        <div style="background:white; padding:12px; border:2px solid var(--accent-gold); border-radius:12px;">
+          <canvas id="modal-qr-canvas" width="200" height="200"></canvas>
+        </div>
+        <code id="modal-qr-code-text" style="margin-top:12px; font-size:0.85rem; color:var(--primary-burgundy); font-weight:bold;">RKD26-XXXX</code>
+      </div>
+      <div class="modal-footer" style="justify-content:center;">
+        <button type="button" class="btn btn-primary btn-sm" onclick="closeModal('modal-view-qr')">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: GOOGLE SYNC -->
+  <div class="modal-backdrop" id="modal-google-sync">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3>☁️ Integrasi Google Sheets & Google Drive</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-google-sync')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <div style="background:#eff6ff; border-left:4px solid #3b82f6; padding:12px; border-radius:4px; font-size:0.85rem; color:#1e40af; margin-bottom:16px;">
+          <strong>Sinkronisasi Google Form Otomatis:</strong> Sambungkan URL Google Sheets respon pendaftaran form. Data peserta baru akan otomatis masuk ke database tanpa input ulang.
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Tautan Google Sheets / Web App URL Apps Script:</label>
+          <input type="text" id="gsheet-url-input" class="form-input" placeholder="https://docs.google.com/spreadsheets/d/... atau https://script.google.com/macros/s/.../exec">
+        </div>
+
+        <div style="display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;">
+          <button class="btn btn-gold btn-sm" id="btn-save-gurl" onclick="saveGoogleUrl()">
+            💾 Simpan Tautan Web App
+          </button>
+          <button class="btn btn-primary btn-sm" id="btn-push-attendance-now" onclick="triggerPushAttendance()">
+            ⚡ Sinkronkan Seluruh Presensi ke Google Sheets
+          </button>
+          <button class="btn btn-secondary btn-sm" id="btn-sync-sheets-now" onclick="triggerSheetsSync()">
+            📥 Ambil Peserta Baru dari Google Sheets
+          </button>
+        </div>
+
+        <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px; margin-bottom:16px;">
+          <div style="font-weight:700; font-size:0.85rem; color:var(--primary-burgundy); margin-bottom:6px;">
+            📑 Unduh Berkas Presensi (Format Microsoft Excel & CSV):
+          </div>
+          <p style="font-size:0.78rem; color:#64748b; margin-bottom:10px;">
+            Berkas rapi otomatis terbagi ke dalam kolom-kolom terpisah di Microsoft Excel (Mac & Windows) serta Google Sheets:
+          </p>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            <a href="/api/attendance/export_log_excel" class="btn btn-primary btn-sm" download>
+              📥 Log Presensi (PRESENSI_LOG.xls)
+            </a>
+            <a href="/api/attendance/export_rekap_excel" class="btn btn-gold btn-sm" download>
+              📊 Rekap 6 Sesi (REKAP_KEHADIRAN.xls)
+            </a>
+            <a href="/api/attendance/export_log_csv" class="btn btn-secondary btn-sm" download style="font-size:0.75rem;">
+              Log .CSV (sep=,)
+            </a>
+            <a href="/api/attendance/export_rekap_csv" class="btn btn-secondary btn-sm" download style="font-size:0.75rem;">
+              Rekap .CSV (sep=,)
+            </a>
+          </div>
+        </div>
+
+        <hr style="border:none; border-top:1px solid #e2e8f0; margin:16px 0;">
+
+        <div class="form-group">
+          <label class="form-label">Google Drive Folder ID (Backup Database & Laporan):</label>
+          <input type="text" id="gdrive-folder-input" class="form-input" placeholder="Contoh: 1A2b3C4d5E6F7g8H9_RAKORDA_BACKUP">
+        </div>
+
+        <div>
+          <button class="btn btn-primary btn-sm" id="btn-backup-drive-now" onclick="triggerDriveBackup()">
+            💾 Backup Database ke Google Drive
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" onclick="closeModal('modal-google-sync')">Tutup</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- MODAL: SETTINGS -->
+  <div class="modal-backdrop" id="modal-settings">
+    <div class="modal-card modal-lg">
+      <div class="modal-header">
+        <h3>⚙️ Pengaturan Kegiatan & Sertifikat</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-settings')">&times;</button>
+      </div>
+      <form id="form-settings" onsubmit="saveSettings(event)">
+        <div class="modal-body">
+          <div class="form-group">
+            <label class="form-label">Tema Kegiatan RAKORDA II:</label>
+            <input type="text" name="event_theme" class="form-input" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Lokasi Penyelenggaraan:</label>
+            <input type="text" name="event_location" class="form-input" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label">Format Nomor Sertifikat:</label>
+              <input type="text" name="cert_number_prefix" class="form-input" required>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Syarat Minimal Kehadiran Sesi (Max 6 Sesi):</label>
+              <select name="cert_min_sessions" class="form-select">
+                <option value="3">Minimal 3 Sesi</option>
+                <option value="4">Minimal 4 Sesi (Rekomendasi)</option>
+                <option value="5">Minimal 5 Sesi</option>
+                <option value="6">Lengkap 6 Sesi</option>
+              </select>
+            </div>
+          </div>
+
+          <div style="background:#f8fafc; padding:12px; border-radius:8px; margin-top:8px; border:1px solid #e2e8f0;">
+            <div style="font-weight:700; font-size:0.85rem; color:var(--primary-burgundy); margin-bottom:8px;">Penandatangan 1 (Kanan):</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Jabatan:</label>
+                <input type="text" name="signer1_title" class="form-input">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Nama:</label>
+                <input type="text" name="signer1_name" class="form-input">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">NIP:</label>
+              <input type="text" name="signer1_nip" class="form-input">
+            </div>
+          </div>
+
+          <div style="background:#f8fafc; padding:12px; border-radius:8px; margin-top:10px; border:1px solid #e2e8f0;">
+            <div style="font-weight:700; font-size:0.85rem; color:var(--primary-burgundy); margin-bottom:8px;">Penandatangan 2 (Kiri):</div>
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Jabatan:</label>
+                <input type="text" name="signer2_title" class="form-input">
+              </div>
+              <div class="form-group">
+                <label class="form-label">Nama:</label>
+                <input type="text" name="signer2_name" class="form-input">
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">NIP:</label>
+              <input type="text" name="signer2_nip" class="form-input">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('modal-settings')">Batal</button>
+          <button type="submit" class="btn btn-primary">Simpan Pengaturan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MODAL: ROLE SWITCH -->
+  <div class="modal-backdrop" id="modal-auth">
+    <div class="modal-card" style="max-width:380px;">
+      <div class="modal-header">
+        <h3>🔐 Ganti Hak Akses Akun</h3>
+        <button class="modal-close-btn" onclick="closeModal('modal-auth')">&times;</button>
+      </div>
+      <div class="modal-body">
+        <p style="font-size:0.85rem; color:#64748b; margin-bottom:14px;">
+          Pilih jenis akun untuk beralih mode akses:
+        </p>
+
+        <div class="form-group">
+          <label class="form-label">Kata Sandi / PIN:</label>
+          <input type="password" id="login-password" class="form-input" placeholder="admin2026 atau petugas2026">
+          <p style="font-size:0.75rem; color:#94a3b8; margin-top:4px;">
+            PIN Default: Admin (<code>admin2026</code>) • Petugas (<code>petugas2026</code>)
+          </p>
+        </div>
+
+        <div style="display:flex; flex-direction:column; gap:8px; margin-top:16px;">
+          <button class="btn btn-primary" onclick="handleLoginSwitch('ADMIN')">
+            👑 Masuk sebagai ADMIN (Akses Penuh)
+          </button>
+          <button class="btn btn-secondary" onclick="handleLoginSwitch('PETUGAS')">
+            📱 Masuk sebagai PETUGAS (Scan QR & Laporan)
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST CONTAINER -->
+  <div id="toast-container"></div>
+
+  <!-- SCRIPTS -->
+  <script src="/js/jsqr.js"></script>
+  <script src="/js/app.js"></script>
+  <script src="/js/scanner.js"></script>
+  <script src="/js/card-cert.js"></script>
+  <script src="/js/report.js"></script>
+</body>
+</html>
